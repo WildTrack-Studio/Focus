@@ -134,35 +134,35 @@ model Species {
 // ============================================
 
 model Image {
-  id          String      @id @default(uuid())
-  filename    String
-  s3Key       String      @unique
-  s3Url       String?
+  id            String      @id @default(uuid())
+  originalName  String      // Nom original du fichier
+  filePath      String      // Chemin de stockage (relatif)
+  fileSize      Int         // Taille en octets
+  mimeType      String      // Type MIME (image/jpeg, etc.)
   
-  // Metadata
-  metadata    Json?       // EXIF, GPS, camera info
+  // Dimensions
+  width         Int?
+  height        Int?
+  
+  // Metadata EXIF
+  capturedAt    DateTime?   // Date de capture (EXIF)
+  gpsLocation   Json?       // {latitude, longitude, altitude}
+  exifData      Json?       // Toutes les données EXIF
+  
+  // Description
+  description   String?
   
   // Processing
-  status      ImageStatus @default(PENDING)
-  errorMessage String?
-  
-  // Location
-  latitude    Float?
-  longitude   Float?
-  altitude    Float?
-  
-  // Camera trap info
-  cameraTrapId String?
-  capturedAt   DateTime?
+  status        ImageStatus @default(PENDING)
   
   // Relations
-  projectId   String
-  project     Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  detections  Detection[]
+  projectId     String
+  project       Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  detections    Detection[]
   
   // Timestamps
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
   
   @@index([projectId])
   @@index([status])

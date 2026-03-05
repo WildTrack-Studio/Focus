@@ -7,6 +7,7 @@ import { PrismaModule } from './common/prisma.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { ProjectsModule } from './modules/projects/projects.module';
+import { ImagesModule } from './modules/images/images.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -30,8 +31,7 @@ import configuration from './config/configuration';
     AuthModule,
     UsersModule,
     ProjectsModule,
-    // ImagesModule,
-    // ImagesModule,
+    ImagesModule,
     // DetectionsModule,
   ],
   controllers: [AppController],

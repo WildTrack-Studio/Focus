@@ -58,14 +58,19 @@
   - [x] Audit logs complet
   - [x] Documentation Swagger
   - [x] Documentation README
-- [ ] Module Images
-  - [ ] CRUD projets
-  - [ ] Permissions par projet
-  - [ ] Statistiques
-- [ ] Module Images
-  - [ ] Upload vers S3
-  - [ ] Métadonnées
-  - [ ] Listing & filtres
+- [x] Module Images
+  - [x] Upload multipart/form-data
+  - [x] Stockage local avec gestion de fichiers
+  - [x] Métadonnées (EXIF, GPS, dimensions)
+  - [x] CRUD images (Create, Read, Update, Delete)
+  - [x] Téléchargement de fichiers
+  - [x] Recherche et filtres (projet, statut, dates)
+  - [x] Pagination et tri
+  - [x] Statistiques (stockage, uploads)
+  - [x] Contrôle d'accès par projet
+  - [x] Audit logs complet
+  - [x] Documentation Swagger
+  - [x] Documentation README
 - [ ] Module Detections
   - [ ] Enregistrement résultats ML
   - [ ] Validation humaine
