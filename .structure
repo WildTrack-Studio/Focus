@@ -1,0 +1,29 @@
+# Structure des dossiers - À créer
+
+## Frontend
+frontend/
+frontend/public/
+frontend/src/
+frontend/src/app/
+frontend/src/components/
+frontend/src/lib/
+frontend/src/types/
+
+## Backend
+backend/src/
+backend/src/modules/
+backend/src/common/
+backend/prisma/
+
+## ML Service
+ml-service/app/
+ml-service/app/models/
+ml-service/app/routes/
+ml-service/app/services/
+ml-service/weights/
+ml-service/data/
+ml-service/tests/
+
+## Infrastructure
+infrastructure/postgres/
+infrastructure/minio/
