@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { PrismaModule } from './common/prisma.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
+import { ProjectsModule } from './modules/projects/projects.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -28,7 +29,8 @@ import configuration from './config/configuration';
     // Modules métier
     AuthModule,
     UsersModule,
-    // ProjectsModule,
+    ProjectsModule,
+    // ImagesModule,
     // ImagesModule,
     // DetectionsModule,
   ],

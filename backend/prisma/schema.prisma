@@ -67,9 +67,11 @@ model Project {
   id          String   @id @default(uuid())
   name        String
   description String?
+  location    String?  // Localisation textuelle (ex: "Parc National du Serengeti, Tanzanie")
   
-  // Location data (GeoJSON)
-  location    Json?
+  // Dates du projet
+  startDate   DateTime?
+  endDate     DateTime?
   
   // Settings
   isPrivate   Boolean  @default(true)
@@ -78,6 +80,7 @@ model Project {
   users       ProjectUser[]
   images      Image[]
   species     Species[]
+  detections  Detection[]
   
   // Timestamps
   createdAt   DateTime @default(now())
@@ -99,11 +102,9 @@ model ProjectUser {
   projectId String
   project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
   
-  role      Role     @default(RESEARCHER)
-  
   createdAt DateTime @default(now())
   
-  @@unique([userId, projectId])
+  @@unique([projectId, userId])
   @@map("project_users")
 }
 
@@ -197,6 +198,9 @@ model Detection {
   additionalData Json?
   
   // Relations
+  projectId     String?
+  project       Project?        @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  
   imageId       String
   image         Image           @relation(fields: [imageId], references: [id], onDelete: Cascade)
   
@@ -204,6 +208,7 @@ model Detection {
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
   
+  @@index([projectId])
   @@index([imageId])
   @@index([speciesId])
   @@index([status])
