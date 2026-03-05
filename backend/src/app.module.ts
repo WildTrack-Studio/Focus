@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from './common/prisma.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { UsersModule } from './modules/users/users.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -26,7 +27,7 @@ import configuration from './config/configuration';
     
     // Modules métier
     AuthModule,
-    // UsersModule,
+    UsersModule,
     // ProjectsModule,
     // ImagesModule,
     // DetectionsModule,

@@ -29,11 +29,16 @@
 - [x] Configuration JWT (dépendances installées)
 
 ### Modules Core
-- [ ] Module Auth
-  - [ ] Register
-  - [ ] Login
-  - [ ] Refresh token
-  - [ ] RBAC Guards
+- [x] Module Auth
+  - [x] Register avec validation stricte
+  - [x] Login avec JWT
+  - [x] Refresh token (30 jours)
+  - [x] RBAC Guards (JwtAuthGuard + RolesGuard)
+  - [x] Decorators (@Auth, @CurrentUser, @Roles)
+  - [x] Get Profile endpoint
+  - [x] Audit logs
+  - [x] Documentation Swagger
+  - [x] Documentation README
 - [ ] Module Users
   - [ ] CRUD utilisateurs
   - [ ] Gestion des rôles
