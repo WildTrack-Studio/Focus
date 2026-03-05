@@ -4,6 +4,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from './common/prisma.module';
+import { AuthModule } from './modules/auth/auth.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -23,8 +24,8 @@ import configuration from './config/configuration';
     // Prisma (Database)
     PrismaModule,
     
-    // Modules métier (à ajouter)
-    // AuthModule,
+    // Modules métier
+    AuthModule,
     // UsersModule,
     // ProjectsModule,
     // ImagesModule,

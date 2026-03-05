@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -29,6 +30,21 @@ async function bootstrap() {
       transform: true,
     }),
   );
+  
+  // Swagger documentation
+  const config = new DocumentBuilder()
+    .setTitle('FOCUS API')
+    .setDescription('Wildlife tracking platform API documentation')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .addTag('Authentication', 'User authentication endpoints')
+    .addTag('Users', 'User management endpoints')
+    .addTag('Projects', 'Project management endpoints')
+    .addTag('Images', 'Image upload and management endpoints')
+    .addTag('Detections', 'ML detection results endpoints')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup(`${apiPrefix}/docs`, app, document);
   
   await app.listen(port ?? 4000);
   

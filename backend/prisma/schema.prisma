@@ -44,6 +44,8 @@ model User {
   firstName String?
   lastName  String?
   role      Role     @default(RESEARCHER)
+  isActive  Boolean  @default(true)
+  lastLogin DateTime?
   
   // Relations
   projects        ProjectUser[]
