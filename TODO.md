@@ -71,10 +71,20 @@
   - [x] Audit logs complet
   - [x] Documentation Swagger
   - [x] Documentation README
-- [ ] Module Detections
-  - [ ] Enregistrement résultats ML
-  - [ ] Validation humaine
-  - [ ] Statistiques
+- [x] Module Detections
+  - [x] CRUD détections (Create, Read, Update, Delete)
+  - [x] Enregistrement résultats ML (confidence, bounding box)
+  - [x] Validation humaine (VALIDATOR, ADMIN)
+  - [x] Gestion des statuts (PENDING_VALIDATION, VALIDATED, REJECTED)
+  - [x] Association avec espèces
+  - [x] Recherche et filtres multi-critères
+  - [x] Validation en lot (batch)
+  - [x] Pagination et tri
+  - [x] Statistiques (par statut, espèces détectées)
+  - [x] Contrôle d'accès par projet et rôle
+  - [x] Audit logs complet
+  - [x] Documentation Swagger
+  - [x] Documentation README
 
 ### Queue & Jobs
 - [ ] Configuration Bull/Redis

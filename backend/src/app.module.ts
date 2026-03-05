@@ -8,6 +8,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { ProjectsModule } from './modules/projects/projects.module';
 import { ImagesModule } from './modules/images/images.module';
+import { DetectionsModule } from './modules/detections/detections.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -32,7 +33,7 @@ import configuration from './config/configuration';
     UsersModule,
     ProjectsModule,
     ImagesModule,
-    // DetectionsModule,
+    DetectionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
