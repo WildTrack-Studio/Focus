@@ -22,11 +22,11 @@
 ## 📋 Phase 2 : Backend API (NestJS)
 
 ### Setup Backend
-- [ ] Initialisation NestJS
-- [ ] Configuration Prisma
-- [ ] Schéma de base de données
-- [ ] Migrations initiales
-- [ ] Configuration JWT
+- [x] Initialisation NestJS
+- [x] Configuration Prisma
+- [x] Schéma de base de données
+- [x] Migrations initiales
+- [x] Configuration JWT (dépendances installées)
 
 ### Modules Core
 - [ ] Module Auth
