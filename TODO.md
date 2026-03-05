@@ -39,10 +39,16 @@
   - [x] Audit logs
   - [x] Documentation Swagger
   - [x] Documentation README
-- [ ] Module Users
-  - [ ] CRUD utilisateurs
-  - [ ] Gestion des rôles
-  - [ ] Profils
+- [x] Module Users
+  - [x] CRUD utilisateurs (Create, Read, Update, Delete)
+  - [x] Gestion des rôles (Admin uniquement)
+  - [x] Profils et recherche avec pagination
+  - [x] Changement de mot de passe
+  - [x] Statistiques utilisateurs
+  - [x] Soft delete avec isActive
+  - [x] Audit logs complet
+  - [x] Documentation Swagger
+  - [x] Documentation README
 - [ ] Module Projects
   - [ ] CRUD projets
   - [ ] Permissions par projet
