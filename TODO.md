@@ -49,7 +49,16 @@
   - [x] Audit logs complet
   - [x] Documentation Swagger
   - [x] Documentation README
-- [ ] Module Projects
+- [x] Module Projects
+  - [x] CRUD projets (Create, Read, Update, Delete)
+  - [x] Assignation utilisateurs (Add/Remove)
+  - [x] Recherche et filtres avec pagination
+  - [x] Statistiques projets
+  - [x] Contrôle d'accès par rôle
+  - [x] Audit logs complet
+  - [x] Documentation Swagger
+  - [x] Documentation README
+- [ ] Module Images
   - [ ] CRUD projets
   - [ ] Permissions par projet
   - [ ] Statistiques
