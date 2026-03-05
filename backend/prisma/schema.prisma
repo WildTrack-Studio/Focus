@@ -1,0 +1,237 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// ENUMS
+// ============================================
+
+enum Role {
+  ADMIN
+  RESEARCHER
+  VALIDATOR
+}
+
+enum ImageStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum DetectionStatus {
+  PENDING_VALIDATION
+  VALIDATED
+  REJECTED
+}
+
+// ============================================
+// USER MODEL
+// ============================================
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  firstName String?
+  lastName  String?
+  role      Role     @default(RESEARCHER)
+  
+  // Relations
+  projects        ProjectUser[]
+  validatedDetections Detection[] @relation("ValidatedBy")
+  auditLogs       AuditLog[]
+  
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("users")
+}
+
+// ============================================
+// PROJECT MODEL
+// ============================================
+
+model Project {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  
+  // Location data (GeoJSON)
+  location    Json?
+  
+  // Settings
+  isPrivate   Boolean  @default(true)
+  
+  // Relations
+  users       ProjectUser[]
+  images      Image[]
+  species     Species[]
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("projects")
+}
+
+// ============================================
+// PROJECT USER (Many-to-Many)
+// ============================================
+
+model ProjectUser {
+  id        String   @id @default(uuid())
+  
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  role      Role     @default(RESEARCHER)
+  
+  createdAt DateTime @default(now())
+  
+  @@unique([userId, projectId])
+  @@map("project_users")
+}
+
+// ============================================
+// SPECIES MODEL
+// ============================================
+
+model Species {
+  id            String   @id @default(uuid())
+  name          String
+  scientificName String?
+  description   String?
+  
+  // Relations
+  projectId     String?
+  project       Project?  @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  detections    Detection[]
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  @@map("species")
+}
+
+// ============================================
+// IMAGE MODEL
+// ============================================
+
+model Image {
+  id          String      @id @default(uuid())
+  filename    String
+  s3Key       String      @unique
+  s3Url       String?
+  
+  // Metadata
+  metadata    Json?       // EXIF, GPS, camera info
+  
+  // Processing
+  status      ImageStatus @default(PENDING)
+  errorMessage String?
+  
+  // Location
+  latitude    Float?
+  longitude   Float?
+  altitude    Float?
+  
+  // Camera trap info
+  cameraTrapId String?
+  capturedAt   DateTime?
+  
+  // Relations
+  projectId   String
+  project     Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  detections  Detection[]
+  
+  // Timestamps
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  
+  @@index([projectId])
+  @@index([status])
+  @@index([capturedAt])
+  @@map("images")
+}
+
+// ============================================
+// DETECTION MODEL
+// ============================================
+
+model Detection {
+  id            String          @id @default(uuid())
+  
+  // ML Results
+  confidence    Float
+  boundingBox   Json            // {x, y, width, height}
+  
+  // Classification
+  speciesId     String?
+  species       Species?        @relation(fields: [speciesId], references: [id], onDelete: SetNull)
+  predictedLabel String?
+  
+  // Validation
+  status        DetectionStatus @default(PENDING_VALIDATION)
+  validated     Boolean         @default(false)
+  validatedById String?
+  validatedBy   User?           @relation("ValidatedBy", fields: [validatedById], references: [id], onDelete: SetNull)
+  validatedAt   DateTime?
+  
+  // Additional data
+  mlModelVersion String?
+  additionalData Json?
+  
+  // Relations
+  imageId       String
+  image         Image           @relation(fields: [imageId], references: [id], onDelete: Cascade)
+  
+  // Timestamps
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  
+  @@index([imageId])
+  @@index([speciesId])
+  @@index([status])
+  @@index([validated])
+  @@map("detections")
+}
+
+// ============================================
+// AUDIT LOG MODEL
+// ============================================
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  
+  action    String   // CREATE, UPDATE, DELETE, LOGIN, etc.
+  entity    String   // User, Project, Image, Detection
+  entityId  String?
+  
+  changes   Json?    // Before/after values
+  ipAddress String?
+  userAgent String?
+  
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  createdAt DateTime @default(now())
+  
+  @@index([userId])
+  @@index([action])
+  @@index([entity])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
